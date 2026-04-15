@@ -1,14 +1,14 @@
 name: Commands tree docs
 
-on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'src/commands/**'
-      - 'scripts/commands-tree.ts'
-      - '.github/workflows/commands-tree.yml'
-  workflow_dispatch:
+# on:
+#   push:
+#     branches:
+#       - main
+#     paths:
+#       - 'src/commands/**'
+#       - 'scripts/commands-tree.ts'
+#       - '.github/workflows/commands-tree.yml'
+#   workflow_dispatch:
 
 permissions:
   contents: write
