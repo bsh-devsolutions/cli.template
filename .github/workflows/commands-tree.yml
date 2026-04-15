@@ -1,0 +1,50 @@
+name: Commands tree docs
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/commands/**'
+      - 'scripts/commands-tree.ts'
+      - '.github/workflows/commands-tree.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-commands-tree:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Regenerate commands tree markdown
+        run: |
+          mkdir -p docs
+          npm run -s commands:tree > docs/cmds-tree
+
+      - name: Commit and push if changed
+        run: |
+          if git diff --quiet -- docs/cmds-tree.md; then
+            echo 'No commands tree changes to commit.'
+            exit 0
+          fi
+
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add docs/cmds-tree.md
+          git commit -m 'docs: update commands tree'
+          git push
