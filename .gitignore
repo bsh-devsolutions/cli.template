@@ -1,0 +1,16 @@
+node_modules/
+dist/
+logs/
+*.tsbuildinfo
+*.log
+npm-debug.log*
+.env
+.env.local
+.env.*.local
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
